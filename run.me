@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# build the docker image
+docker build -t nf-spike .
+
+# emulate:
+# nf-spike manager in.txt |  nf-spike worker | nf-spike reporter
+# docker run -v /path/to/in.txt:/in.txt nf-spike manager /in.txt | docker run -i nf-spike worker | docker run -i nf-spike reporter
+# Run the worker on four cores using NF
+./spike.nf --infile=in.txt
+
+# clean up
+rm -rf work
+rm -rf .nextflow*
